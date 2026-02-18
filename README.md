@@ -2,23 +2,23 @@
 
 A lightweight, asynchronous security scanner for Neovim powered by [Opengrep](https://github.com/opengrep/opengrep). 
 
-`sift.nvim` allows you to run static analysis security scans on your files or entire projects directly from your editor, displaying results in a beautiful, searchable [Snacks.picker](https://github.com/folke/snacks.nvim).
+`sift.nvim` allows you to run static analysis security scans on your files or entire projects directly from your editor, displaying results in a searchable [Snacks.picker](https://github.com/folke/snacks.nvim).
 
-## ✨ Features
+## Features
 
-- **Async Scanning**: Non-blocking `vim.system` calls ensure your UI never freezes during a scan.
-- **Snacks Integration**: Leverages the Snacks.nvim picker for results, including code previews and detailed security messages.
+- **Async Scanning**: Non-blocking `vim.system` calls so your UI doesn't freeze during a scan.
+- **Snacks Integration**: Leverages the Snacks.nvim picker for results, including code previews and finding details.
 - **Resume Support**: Instantly reopen your last scan results without re-running the tool.
 - **Severity Filtering**: Dedicated hotkeys to filter between Errors and Warnings within the picker.
 - **Health Checks**: Built-in diagnostics via `:checkhealth sift`.
 
-## 📦 Requirements
+## Requirements
 
 - **Neovim** 0.10+
 - **[Opengrep](https://github.com/opengrep/opengrep)**: Must be installed and available in your `$PATH`.
 - **[Snacks.nvim](https://github.com/folke/snacks.nvim)**: Used for the results UI and notifications.
 
-## 🚀 Installation
+## Installation
 
 Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
@@ -45,7 +45,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ### Part 2: Usage, Troubleshooting, and License
 
-## ⌨️ Usage
+## Usage
 
 ### Commands
 - `:SiftProject` — Scans the current working directory.
@@ -59,7 +59,7 @@ When the Sift picker is open:
 - `<Enter>`: Jump to the file, line, and column of the finding.
 - `<Esc>`: Close the picker.
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 If the plugin isn't working as expected, run:
 ```vim
