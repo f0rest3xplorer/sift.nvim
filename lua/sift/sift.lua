@@ -1,5 +1,3 @@
-print("loading sift.lua")
-
 return {
 	{
 		name = "sift",
