@@ -24,7 +24,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 {
-  "your-username/sift.nvim",
+  "f0rest3xplorer/sift.nvim",
   dependencies = { "folke/snacks.nvim" },
   keys = {
     { "<leader>Sp", "<cmd>SiftProject<cr>", desc = "Sift Project" },
