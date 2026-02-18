@@ -41,6 +41,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
     end
   end,
 }
+```
 
 ### Part 2: Usage, Troubleshooting, and License
 
