@@ -24,8 +24,9 @@ function M.json(stdout)
 	for _, res in ipairs(decoded.results) do
 		table.insert(formatted, {
 			file = res.path,
+			filename = res.path:match("([^/\\]+)$"),
 			message = res.extra.message or "",
-			likelyhood = res.extra.metadata.likelyhood,
+			likelihood = res.extra.metadata.likelihood,
 			impact = res.extra.metadata.impact,
 			confidence = res.extra.metadata.confidence,
 			category = res.extra.metadata.category,
@@ -40,7 +41,7 @@ function M.json(stdout)
 			pos = { res.start.line, res.start.col - 1 }, -- Neovim columns are 0-indexed
 			check_id = res.check_id,
 			severity = res.extra and res.extra.severity or "INFO",
-			lines = res.extra.lines,
+			lines = res.extra.metadata.lines,
 		})
 	end
 
@@ -48,4 +49,3 @@ function M.json(stdout)
 end
 
 return M
-
