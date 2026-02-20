@@ -4,6 +4,8 @@ A lightweight, asynchronous security scanner for Neovim powered by [Opengrep](ht
 
 `redline.nvim` allows you to run static analysis security scans on your files or entire projects directly from your editor, displaying results in a searchable [Snacks.picker](https://github.com/folke/snacks.nvim).
 
+![Screenshot of scan results](assets/finding_results.jpeg)
+
 ## Features
 
 - **Async Scanning**: Non-blocking `vim.system` calls so your UI doesn't freeze during a scan.
@@ -25,46 +27,47 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 ```lua
 
 return {
+  -- RedLine plugin
   {
     "f0rest3xplorer/redline.nvim",
     dependencies = {
       "folke/snacks.nvim",
       "MeanderingProgrammer/render-markdown.nvim",
     },
-    cmd = { "RedLineProject", "RedLineFile", "RedLineResume" },
+    -- Use init to register commands so Neovim knows they exist immediately
+    init = function()
+      vim.api.nvim_create_user_command("RedLineProject", function()
+        require("redline").project_scan()
+      end, {})
+      vim.api.nvim_create_user_command("RedLineFile", function()
+        require("redline").file_scan()
+      end, {})
+      vim.api.nvim_create_user_command("RedLineResume", function()
+        require("redline").resume_scan()
+      end, {})
+    end,
     keys = {
-      {
-        "<leader>Rp",
-        function()
-          require("redline").project_scan()
-        end,
-        desc = "RedLine: Project Scan",
-      },
-      {
-        "<leader>Rf",
-        function()
-          require("redline").file_scan()
-        end,
-        desc = "RedLine: File Scan",
-      },
-      {
-        "<leader>Rr",
-        function()
-          require("redline").resume_scan()
-        end,
-        desc = "RedLine: Resume Last Scan",
-      },
+      { "<leader>Rp", "<cmd>RedLineProject<cr>", desc = "Project Scan" },
+      { "<leader>Rf", "<cmd>RedLineFile<cr>", desc = "File Scan" },
+      { "<leader>Rr", "<cmd>RedLineResume<cr>", desc = "Resume Last Scan" },
     },
     config = function()
       require("redline").setup()
+    end,
+  },
 
-      local ok, wk = pcall(require, "which-key")
-      if ok then
-        wk.add({ { "<leader>R", group = "RedLine", icon = "󰭎 " } })
-      end
+  -- Which-key registration (Modern Syntax)
+  {
+    "folke/which-key.nvim",
+    opts = function()
+      local wk = require("which-key")
+      wk.add({
+        { "<leader>R", group = "RedLine", icon = "󰭎 " },
+      })
     end,
   },
 }
+
 
 ```
 
