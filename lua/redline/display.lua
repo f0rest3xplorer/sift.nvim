@@ -178,7 +178,6 @@ function M.open_picker(items)
 				"",
 				item.file .. " Row:" .. item.pos[1],
 				"",
-				"",
 				"**Code Preview:**",
 				"",
 				"```" .. ft,

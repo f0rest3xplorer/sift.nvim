@@ -7,11 +7,41 @@ local start_time = 0
 local idx = 1
 local spinner_frames = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
 
--- Helper to count severities
+--[[Helper to count severities
 local function summarize(results)
 	local counts = { CRITICAL = 0, HIGH = 0, MEDIUM = 0, LOW = 0 }
 	for _, res in ipairs(results) do
 		local sev = res.severity or "LOW"
+		if counts[sev] ~= nil then
+			counts[sev] = counts[sev] + 1
+		end
+	end
+	return counts
+end
+--]]
+--
+
+local function summarize(data)
+	-- 1. Ensure we are looking at the array of matches
+	local matches = data.results or data
+	local counts = { CRITICAL = 0, HIGH = 0, MEDIUM = 0, LOW = 0 }
+	-- Add this mapping inside summarize to bridge the gap
+	local map = {
+		ERROR = "CRITICAL",
+		WARNING = "HIGH",
+		INFO = "LOW",
+	}
+
+	-- Inside the loop
+	if type(matches) ~= "table" then
+		return counts
+	end
+
+	for _, res in ipairs(matches) do
+		-- 2. Opengrep severity is usually inside 'extra'
+		local sev = (res.extra and res.extra.severity) or res.severity or "LOW"
+		sev = sev:upper()
+		sev = map[sev] or sev -- Convert ERROR to CRITICAL, etc.
 		if counts[sev] ~= nil then
 			counts[sev] = counts[sev] + 1
 		end
@@ -60,15 +90,15 @@ function M.stop(results)
 
 	local elapsed_ms = (vim.loop.hrtime() - start_time) / 1e6
 	local elapsed = string.format("%.2fs", elapsed_ms / 1000)
-	local total = #results or 0
-	local counts = summarize(results or {})
+
+	-- Extract the array correctly
+	local matches = results.results or results or {}
+	local total = #matches
+	local counts = summarize(results)
 
 	local message
-	local level
-
 	if total == 0 then
 		message = "No issues found (" .. elapsed .. ")"
-		level = vim.log.levels.INFO -- Info is usually better for "no errors" than Warn
 	else
 		message = string.format(
 			"%d issues (%s)\nC:%d H:%d M:%d L:%d",
@@ -79,14 +109,13 @@ function M.stop(results)
 			counts.MEDIUM,
 			counts.LOW
 		)
-		level = vim.log.levels.INFO
 	end
 
 	snacks.notify(message, {
 		title = "Redline",
 		id = "redline_scan",
-		level = level,
-		timeout = 5000, -- Don't leave the final result up forever
+		level = vim.log.levels.INFO,
+		timeout = 5000,
 	})
 end
 
