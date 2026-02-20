@@ -26,8 +26,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 return {
   {
-    "redline",
-    dir = "/Users/markdimond/Documents/Projects/redline.nvim/",
+    "f0rest3xplorer/redline.nvim",
     dependencies = {
       "folke/snacks.nvim",
       "MeanderingProgrammer/render-markdown.nvim",
