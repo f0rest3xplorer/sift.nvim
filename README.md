@@ -9,7 +9,6 @@ A lightweight, asynchronous security scanner for Neovim powered by [Opengrep](ht
 - **Async Scanning**: Non-blocking `vim.system` calls so your UI doesn't freeze during a scan.
 - **Snacks Integration**: Leverages the Snacks.nvim picker for results, including code previews and finding details.
 - **Resume Support**: Instantly reopen your last scan results without re-running the tool.
-- **Severity Filtering**: Dedicated hotkeys to filter between Errors and Warnings within the picker.
 - **Health Checks**: Built-in diagnostics via `:checkhealth redline`.
 
 ## Requirements
