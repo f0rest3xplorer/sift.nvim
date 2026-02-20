@@ -17,6 +17,7 @@ A lightweight, asynchronous security scanner for Neovim powered by [Opengrep](ht
 - **Neovim** 0.10+
 - **[Opengrep](https://github.com/opengrep/opengrep)**: Must be installed and available in your `$PATH`.
 - **[Snacks.nvim](https://github.com/folke/snacks.nvim)**: Used for the results UI and notifications.
+- **[render-markdown](https://github.com/MeanderingProgrammer/render-markdown.nvim)**: Used to render markdown used to display results.
 
 ## Installation
 
@@ -71,14 +72,12 @@ return {
 ## Usage
 
 ### Commands
-- `:RedLineProject` — Scans the current working directory.
-- `:RedLineFile` — Scans the currently active buffer.
-- `:RedLineResume` — Reopens the picker with the results from the most recent scan.
+- `:RedLineProject`  or `<leader>Rp` — Scans the current working directory.
+- `:RedLineFile` or `<leader>Rf` — Scans the currently active buffer.
+- `:RedLineResume` or `<leader>Rr` — Reopens the picker with the results from the most recent scan.
 
 ### Picker Navigation
 When the RedLine picker is open:
-- `<C-e>`: Filter the list to show **ERROR** severity only.
-- `<C-w>`: Filter the list to show **WARNING** severity only.
 - `<Enter>`: Jump to the file, line, and column of the finding.
 - `<Esc>`: Close the picker.
 
