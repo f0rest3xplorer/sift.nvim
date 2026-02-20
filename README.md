@@ -1,8 +1,8 @@
-# sift.nvim
+# redline.nvim
 
 A lightweight, asynchronous security scanner for Neovim powered by [Opengrep](https://github.com/opengrep/opengrep). 
 
-`sift.nvim` allows you to run static analysis security scans on your files or entire projects directly from your editor, displaying results in a searchable [Snacks.picker](https://github.com/folke/snacks.nvim).
+`redline.nvim` allows you to run static analysis security scans on your files or entire projects directly from your editor, displaying results in a searchable [Snacks.picker](https://github.com/folke/snacks.nvim).
 
 ## Features
 
@@ -10,7 +10,7 @@ A lightweight, asynchronous security scanner for Neovim powered by [Opengrep](ht
 - **Snacks Integration**: Leverages the Snacks.nvim picker for results, including code previews and finding details.
 - **Resume Support**: Instantly reopen your last scan results without re-running the tool.
 - **Severity Filtering**: Dedicated hotkeys to filter between Errors and Warnings within the picker.
-- **Health Checks**: Built-in diagnostics via `:checkhealth sift`.
+- **Health Checks**: Built-in diagnostics via `:checkhealth redline`.
 
 ## Requirements
 
@@ -23,35 +23,61 @@ A lightweight, asynchronous security scanner for Neovim powered by [Opengrep](ht
 Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
-{
-  "f0rest3xplorer/sift.nvim",
-  dependencies = { "folke/snacks.nvim" },
-  keys = {
-    { "<leader>Sp", "<cmd>SiftProject<cr>", desc = "Sift Project" },
-    { "<leader>Sf", "<cmd>SiftFile<cr>", desc = "Sift File" },
-    { "<leader>Sr", "<cmd>SiftResume<cr>", desc = "Sift Resume Last" },
+
+return {
+  {
+    "redline",
+    dir = "/Users/markdimond/Documents/Projects/redline.nvim/",
+    dependencies = {
+      "folke/snacks.nvim",
+      "MeanderingProgrammer/render-markdown.nvim",
+    },
+    cmd = { "RedLineProject", "RedLineFile", "RedLineResume" },
+    keys = {
+      {
+        "<leader>Rp",
+        function()
+          require("redline").project_scan()
+        end,
+        desc = "RedLine: Project Scan",
+      },
+      {
+        "<leader>Rf",
+        function()
+          require("redline").file_scan()
+        end,
+        desc = "RedLine: File Scan",
+      },
+      {
+        "<leader>Rr",
+        function()
+          require("redline").resume_scan()
+        end,
+        desc = "RedLine: Resume Last Scan",
+      },
+    },
+    config = function()
+      require("redline").setup()
+
+      local ok, wk = pcall(require, "which-key")
+      if ok then
+        wk.add({ { "<leader>R", group = "RedLine", icon = "󰭎 " } })
+      end
+    end,
   },
-  config = function()
-    -- Optional: Setup which-key labels if using WhichKey
-    local ok, wk = pcall(require, "which-key")
-    if ok then
-      wk.add({
-        { "<leader>S", group = "Sift", icon = "󰭎 " },
-      })
-    end
-  end,
 }
+
 ```
 
 ## Usage
 
 ### Commands
-- `:SiftProject` — Scans the current working directory.
-- `:SiftFile` — Scans the currently active buffer.
-- `:SiftResume` — Reopens the picker with the results from the most recent scan.
+- `:RedLineProject` — Scans the current working directory.
+- `:RedLineFile` — Scans the currently active buffer.
+- `:RedLineResume` — Reopens the picker with the results from the most recent scan.
 
 ### Picker Navigation
-When the Sift picker is open:
+When the RedLine picker is open:
 - `<C-e>`: Filter the list to show **ERROR** severity only.
 - `<C-w>`: Filter the list to show **WARNING** severity only.
 - `<Enter>`: Jump to the file, line, and column of the finding.
@@ -61,4 +87,4 @@ When the Sift picker is open:
 
 If the plugin isn't working as expected, run:
 ```vim
-:checkhealth sift
+:checkhealth redline
