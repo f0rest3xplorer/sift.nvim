@@ -27,14 +27,13 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 ```lua
 
 return {
-  -- RedLine plugin
   {
     "f0rest3xplorer/redline.nvim",
     dependencies = {
       "folke/snacks.nvim",
       "MeanderingProgrammer/render-markdown.nvim",
     },
-    -- Use init to register commands so Neovim knows they exist immediately
+    
     init = function()
       vim.api.nvim_create_user_command("RedLineProject", function()
         require("redline").project_scan()
@@ -56,7 +55,6 @@ return {
     end,
   },
 
-  -- Which-key registration (Modern Syntax)
   {
     "folke/which-key.nvim",
     opts = function()

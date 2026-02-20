@@ -171,14 +171,16 @@ function M.open_picker(items)
 				"> Confidence: **" .. to_str(item.confidence) .. "**",
 				"",
 				"## Description",
+				"",
 				(item.message or "No description provided."),
 				"",
 				"## Location",
-				"```text",
-				item.file .. ":" .. item.pos[1] .. ":" .. (item.pos[2] + 1),
-				"```",
 				"",
-				"### Code Preview",
+				item.file .. " Row:" .. item.pos[1] .. " Col:" .. (item.pos[2] + 1),
+				"",
+				"",
+				"**Code Preview:**",
+				"",
 				"```" .. ft,
 			}
 
@@ -190,10 +192,12 @@ function M.open_picker(items)
 			local rest = {
 				"",
 				"## Classification",
+				"",
 				"- **CWE:** " .. to_str(item.cwe),
 				"- **OWASP:** " .. to_str(item.owasp),
 				"",
 				"## References",
+				"",
 				(to_str(item.references) ~= "N/A" and to_str(item.references) or "No references available."),
 			}
 
