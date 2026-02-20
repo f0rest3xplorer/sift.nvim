@@ -25,7 +25,6 @@ A lightweight, asynchronous security scanner for Neovim powered by [Opengrep](ht
 Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
-
 return {
   {
     "f0rest3xplorer/redline.nvim",
@@ -65,8 +64,6 @@ return {
     end,
   },
 }
-
-
 ```
 
 ## Usage
